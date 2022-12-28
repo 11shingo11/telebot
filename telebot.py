@@ -7,6 +7,8 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
 
 
+#this bot neeeds for reciving memes about your Zodiac sign
+
 executable_path = 'C:/chromedriver.exe'
 service = ChromeService(executable_path=executable_path)
 driver = webdriver.Chrome(service=service)
