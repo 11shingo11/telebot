@@ -6,15 +6,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.keys import Keys
 
+# this bot neeeds for reciving memes about your Zodiac sign
 
-#this bot neeeds for reciving memes about your Zodiac sign
+executable_path = "C:/chromedriver.exe"
 
-executable_path = 'C:/chromedriver.exe'
+
 service = ChromeService(executable_path=executable_path)
+
+
 driver = webdriver.Chrome(service=service)
-
-
-
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -37,7 +37,8 @@ bot.set_update_listener(listener)
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    bot.send_message(message.chat.id, 'Привет!Начнем?Скажи свой Знак зодиака(например Лев) и я скажу что тебя сегодня ждет!')
+    bot.send_message(message.chat.id, 'Привет!Начнем?Скажи свой Знак зодиака(например Лев) и я скажу что тебя сегодня '
+                                      'ждет!')
 
 
 @bot.message_handler(content_types=['text'])
@@ -51,7 +52,8 @@ def handle_text(message):
     time.sleep(0.5)
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
     if len(word) < 3:
-        bot.send_message(message.chat.id, 'Прогнозы со знаком зодиака "{}" не найдены.Может вы допустили ошибку?Попробуйте еще раз.'.format(word))
+        bot.send_message(message.chat.id, 'Прогнозы со знаком зодиака "{}" не найдены.Может вы допустили '
+                                          'ошибку?Попробуйте еще раз.'.format(word))
     else:
         if word == 'рыба' or word == 'Рыба' or word == 'рыбы' or word == 'Рыбы':
             word = 'РЫБЫ'
@@ -81,14 +83,15 @@ def handle_text(message):
         for post in posts:
             sms = post.find_element(By.CLASS_NAME, 'wall_post_text')
             title = sms.text
-            print (title)
+            print(title)
             if word in title:
                 img_element = post.find_element(By.CSS_SELECTOR, 'img')
                 img_url = img_element.get_attribute('src')
                 bot.send_photo(message.chat.id, img_url, caption=title)
                 break
         else:
-            bot.send_message(message.chat.id, 'Прогнозы со знаком зодиака "{}" не найдены.Может вы допустили ошибку?Попробуйте еще раз.'.format(word))
+            bot.send_message(message.chat.id, 'Прогнозы со знаком зодиака "{}" не найдены.Может вы допустили '
+                                              'ошибку?Попробуйте еще раз.'.format(word))
 
 
 bot.infinity_polling()
